@@ -35,14 +35,14 @@ Route::get('/home', [HomeController::class, 'index'])->middleware(['auth'])->nam
 Route::get('/graficos/datos', [HomeController::class,'datos'])->name('graficos.datos');
 
 //expedientes_ingresos
-Route::post('/ingresos/store', [ExpedientesingresosController::class, 'store']);
-Route::get('/ingresos/index/{expediente_id}', [ExpedientesingresosController::class, 'index']);
-Route::get('/ingresos/destroy/{ingreso_id}', [ExpedientesingresosController::class, 'destroy']);
+Route::post('/expediente/ingresos/store', [ExpedientesingresosController::class, 'store'])->name('expediente.ingresos.store');
+Route::get('/expediente/ingresos/index/{expediente_id}', [ExpedientesingresosController::class, 'index'])->name('expediente.ingresos.index');
+Route::get('/expediente/ingresos/destroy/{ingreso_id}', [ExpedientesingresosController::class, 'destroy'])->name('expediente.ingresos.destroy');
 
 //expediente_egresos
-Route::post('/egresos/store', [ExpedientesegresosController::class, 'store']);
-Route::get('/egresos/index/{expediente_id}', [ExpedientesegresosController::class, 'index']);
-Route::get('/egresos/destroy/{egreso_id}', [ExpedientesegresosController::class, 'destroy']);
+Route::post('/expediente/egresos/store', [ExpedientesegresosController::class, 'store'])->name('expediente.egresos.store');
+Route::get('/expediente/egresos/index/{expediente_id}', [ExpedientesegresosController::class, 'index'])->name('expediente.egresos.index');
+Route::get('/expediente/egresos/destroy/{egreso_id}', [ExpedientesegresosController::class, 'destroy'])->name('expediente.egresos.destroy');
 
 
 //ingresos

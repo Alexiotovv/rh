@@ -756,57 +756,72 @@
         // }
 
         function guardarIngreso() {
-            var form = $('#formIngreso')[0];
-            var formData = new FormData(form);
+            // Opcional: evita recarga si usas botón tipo submit
+
+            let ingreso = $('#ingreso').val().trim();
+            let monto_ingreso = $('#monto_ingreso').val().trim();
+            let expediente_id_ing = $('#expediente_id_ing').val().trim();
 
             $.ajax({
                 type: "POST",
-                url: "/ingresos/store", // Cambia esta ruta si tu endpoint es diferente
-                data: formData,
-                contentType: false,
-                processData: false,
                 dataType: "json",
+                url: "{{ route('expediente.ingresos.store') }}", // Importante: coma al final de la línea anterior
+                data: {
+                    ingreso: ingreso,
+                    monto_ingreso: monto_ingreso,
+                    expediente_id_ing: expediente_id_ing,
+                    _token: '{{ csrf_token() }}' // Token CSRF de Laravel
+                },
                 success: function (response) {
-                    // Aquí puedes hacer cosas como actualizar tablas, limpiar formulario, etc.
                     alert('Ingreso guardado correctamente');
-                    llenaDataTableIngresos($("#expediente_id_ing").val());
-                    
-                    //$('#formIngreso')[0].reset();
+                    llenaDataTableIngresos(expediente_id_ing);
+                    // $('#formIngreso')[0].reset();
                 },
                 error: function(xhr) {
                     if (xhr.status === 422) {
                         let response = xhr.responseJSON;
-                        alert(response.message); // Muestra mensaje de validación del servidor
+                        alert(response.message); // errores de validación
+                    } else if (xhr.status === 419) {
+                        alert('Token CSRF inválido o expirado.');
                     } else {
                         alert('Error inesperado: ' + xhr.statusText);
+                        console.error(xhr.responseText);
                     }
                 }
             });
         }
 
         function guardarEgreso() {
-            var form = $('#formEgreso')[0];
-            var formData = new FormData(form);
+            // Opcional: evita recarga si usas botón tipo submit
+
+            let egreso = $('#egreso').val().trim();
+            let monto_egreso = $('#monto_egreso').val().trim();
+            let expediente_id_egr = $('#expediente_id_egr').val().trim();
 
             $.ajax({
                 type: "POST",
-                url: "/egresos/store", // Cambia esta ruta si tu endpoint es diferente
-                data: formData,
-                contentType: false,
-                processData: false,
                 dataType: "json",
+                url: "{{ route('expediente.egresos.store') }}", // Importante: coma al final de la línea anterior
+                data: {
+                    egreso: egreso,
+                    monto_egreso: monto_egreso,
+                    expediente_id_egr: expediente_id_egr,
+                    _token: '{{ csrf_token() }}' // Token CSRF de Laravel
+                },
                 success: function (response) {
-                    // Aquí puedes hacer cosas como actualizar tablas, limpiar formulario, etc.
                     alert('Egreso guardado correctamente');
-                    llenaDataTableEgresos($("#expediente_id_egr").val());
-                    //$('#formIngreso')[0].reset();
+                    llenaDataTableEgresos(expediente_id_egr);
+                    // $('#formEgreso')[0].reset();
                 },
                 error: function(xhr) {
                     if (xhr.status === 422) {
                         let response = xhr.responseJSON;
-                        alert(response.message); // Muestra mensaje de validación del servidor
+                        alert(response.message); // errores de validación
+                    } else if (xhr.status === 419) {
+                        alert('Token CSRF inválido o expirado.');
                     } else {
                         alert('Error inesperado: ' + xhr.statusText);
+                        console.error(xhr.responseText);
                     }
                 }
             });
@@ -862,7 +877,7 @@
             
             $.ajax({
                 type: "GET",
-                url: "/ingresos/index/" + id,
+                url: "/expediente/ingresos/index/" + id,
                 dataType: "json",
                 success: function(response) {
                     $("#dtExpedienteIngresos tbody").html("");
@@ -892,7 +907,7 @@
         function llenaDataTableEgresos(id) {
             $.ajax({
                 type: "GET",
-                url: "/egresos/index/" + id,
+                url: "/expediente/egresos/index/" + id,
                 dataType: "json",
                 success: function(response) {
                     $("#dtExpedienteEgresos tbody").html("");
@@ -1100,7 +1115,7 @@
                 let id=$("#id_registro_eliminar").val();
                 $.ajax({
                     type: "GET",
-                    url: "/ingresos/destroy/"+id,
+                    url: "/expediente/ingresos/destroy/"+id,
                     dataType: "json",
                     success: function (response) {
                         
@@ -1120,7 +1135,7 @@
                 let id=$("#id_registro_eliminar").val();
                 $.ajax({
                     type: "GET",
-                    url: "/egresos/destroy/"+id,
+                    url: "/expediente/egresos/destroy/"+id,
                     dataType: "json",
                     success: function (response) {
                         

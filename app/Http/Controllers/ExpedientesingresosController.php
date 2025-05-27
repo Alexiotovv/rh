@@ -11,20 +11,21 @@ class ExpedientesingresosController extends Controller
 {
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'expediente_id_ing' => 'required|exists:expedientes,id',
-            'ingreso' => 'required|exists:ingresos,id',
-            'monto_ingreso' => 'required|numeric|min:0',
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'expediente_id_ing' => 'required|exists:expedientes,id',
+        //     'ingreso' => 'required|exists:ingresos,id',
+        //     'monto_ingreso' => 'required|numeric|min:0',
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Validación fallida',
-                'errors' => $validator->errors()
-            ], 422);
-        }
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'message' => 'Validación fallida',
+        //         'errors' => $validator->errors()
+        //     ], 422);
+        // }
 
-        try {
+        // try {
+   
 
             $registro = new expediente_ingresos();
             $registro->expediente_id = $request->expediente_id_ing;
@@ -36,12 +37,12 @@ class ExpedientesingresosController extends Controller
                 'message' => 'Ingreso guardado correctamente',
                 'data' => $registro
             ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error al guardar el ingreso',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         'message' => 'Error al guardar el ingreso',
+        //         'error' => $e->getMessage()
+        //     ], 500);
+        // }
     }
 
     public function index($expediente_id)

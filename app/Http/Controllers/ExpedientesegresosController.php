@@ -11,20 +11,20 @@ class ExpedientesegresosController extends Controller
 {
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'expediente_id_egr' => 'required|exists:expedientes,id',
-            'egreso' => 'required|exists:egresos,id',
-            'monto_egreso' => 'required|numeric|min:0',
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'expediente_id_egr' => 'required|exists:expedientes,id',
+        //     'egreso' => 'required|exists:egresos,id',
+        //     'monto_egreso' => 'required|numeric|min:0',
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Validación fallida',
-                'errors' => $validator->errors()
-            ], 422);
-        }
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'message' => 'Validación fallida',
+        //         'errors' => $validator->errors()
+        //     ], 422);
+        // }
 
-        try {
+        // try {
 
             $registro = new expediente_egresos();
             $registro->expediente_id = $request->expediente_id_egr;
@@ -36,12 +36,12 @@ class ExpedientesegresosController extends Controller
                 'message' => 'Egreso guardado correctamente',
                 'data' => $registro
             ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error al guardar el egreso',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         'message' => 'Error al guardar el egreso',
+        //         'error' => $e->getMessage()
+        //     ], 500);
+        // }
     }
 
     public function index($expediente_id)
